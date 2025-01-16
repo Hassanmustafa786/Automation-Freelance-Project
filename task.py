@@ -9,7 +9,6 @@ from selenium.webdriver.edge.options import Options
 import time
 import re
 import random
-from urllib.parse import urlparse, parse_qs
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
@@ -35,7 +34,7 @@ def initialize_driver():
         edge_options.add_argument("--profile-directory=Default")
         edge_options.add_argument("--user-data-dir=var/tmp/chrome_user_data")  # Ensure this path is correct
         edge_options.add_argument("--no-sandbox")  # Added for added security, especially for headless modes
-        webdriver_path = "edgedriver_mac64/msedgedriver"  # Replace with the correct path for your system
+        webdriver_path = "/Users/owner/Hassan/Freelance-Work/edgedriver_mac64/msedgedriver"  # Replace with the correct path for your system
         service = Service(webdriver_path)
         driver = webdriver.Edge(service=service, options=edge_options)
     return driver
