@@ -71,3 +71,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# pyinstaller --onefile pyqt_runner.py
