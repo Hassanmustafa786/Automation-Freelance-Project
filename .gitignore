@@ -6,3 +6,4 @@ __pycache__/
 app.ipynb
 dbmongo.ipynb
 final_v1.ipynb
+.env

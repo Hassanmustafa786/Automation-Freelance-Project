@@ -16,8 +16,8 @@ import pandas as pd
 from pymongo import MongoClient
 
 # MongoDB setup
-client = MongoClient("mongodb://localhost:27017/")
-db = client["Leads"]
+client = MongoClient("mongodb://localhost:27017/", tlsAllowInvalidCertificates=True)
+db = client.get_database("Leads")
 collection = db["lead_collection_1"]
 
 # Global variable for storing the driver
@@ -327,7 +327,7 @@ while True:
                     href_value = None
 
                 # Store data
-                data.append({
+                document = {
                     "Serial Number": serial_number,
                     "Date Abandoned": abandoned_date,
                     "Mark Text": mark_text,
@@ -337,8 +337,11 @@ while True:
                     "Signatory Position": signatory_position,
                     "Signatory Phone": signatory_phone,
                     "Signatory Phone 1": signatory_phone_1,
-                })
+                }
                 # print(data)
+
+                insert_result = collection.insert_one(document)
+                print(f"Inserted document with id: {insert_result.inserted_id}")
 
                 # Reset all variables to None at the start of each loop iteration
                 abandoned_date = None
@@ -357,9 +360,9 @@ while True:
     finally:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         # Save data to DataFrame
-        df = pd.DataFrame(data)
+        # df = pd.DataFrame(data)
         # Save DataFrame to MongoDB
-        collection.insert_many(df.to_dict("records"))
+        # collection.insert_many(df.to_dict("records"))
         print(f"Data inserted into MongoDB collection '{collection.name}' successfully!")
 
         driver.get("https://tmsearch.uspto.gov/search/search-information")
